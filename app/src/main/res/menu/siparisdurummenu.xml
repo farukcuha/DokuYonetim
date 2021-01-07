@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/durum1"
+        android:title="Hazırlanıyor"/>
+    <item
+        android:id="@+id/durum2"
+        android:title="Kargoya Verildi">
+
+        <menu>
+            <item
+                android:id="@+id/kargo1"
+                android:title="Aras"/>
+            <item
+                android:id="@+id/kargo2"
+                android:title="Yurtiçi"/>
+            <item
+                android:id="@+id/kargo3"
+                android:title="MNG"/>
+            <item
+                android:id="@+id/kargo4"
+                android:title="Sürat"/>
+            <item
+                android:id="@+id/kargo5"
+                android:title="PTT"/>
+            <item
+                android:id="@+id/kargo6"
+                android:title="Ups"/>
+
+        </menu>
+    </item>
+    <item
+        android:id="@+id/durum4"
+        android:title="Tamamlandı"/>
+    <item
+        android:id="@+id/durum3"
+        android:title="İptal Edildi"/>
+
+</menu>

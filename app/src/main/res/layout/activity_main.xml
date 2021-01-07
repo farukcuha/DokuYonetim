@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:gravity="center">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon"
+        tools:ignore="MissingConstraints" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/gelensiparisler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="Gelen Siparişler"
+                android:textSize="30dp"
+                android:textColor="#111111"
+                android:background="@drawable/anasayfaitemborder"
+                android:layout_margin="10dp"
+                android:onClick="onClick"
+                />
+            <TextView
+                android:id="@+id/tamamlanansiparisler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="Tamamlanan Siparişler"
+                android:textSize="30dp"
+                android:textColor="#111111"
+                android:background="@drawable/anasayfaitemborder"
+                android:layout_margin="10dp"
+                android:onClick="onClick"
+
+                />
+            <TextView
+                android:id="@+id/ürünler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="Ürünler"
+                android:textSize="30dp"
+                android:textColor="#111111"
+                android:background="@drawable/anasayfaitemborder"
+                android:layout_margin="10dp"
+                android:onClick="onClick"
+
+                />
+            <TextView
+                android:id="@+id/kullanıcılar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="Kullanıcılar"
+                android:textSize="30dp"
+                android:textColor="#111111"
+                android:background="@drawable/anasayfaitemborder"
+                android:layout_margin="10dp"
+                android:onClick="onClick"
+
+                />
+
+            <TextView
+                android:id="@+id/anasayfaicerikleri"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="Anasayfa İçerikleri"
+                android:textSize="30dp"
+                android:textColor="#111111"
+                android:background="@drawable/anasayfaitemborder"
+                android:layout_margin="10dp"
+                android:onClick="onClick"
+
+                />
+            <TextView
+                android:id="@+id/bildirim"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="Bildirim Gönderimi"
+                android:textSize="30dp"
+                android:textColor="#111111"
+                android:background="@drawable/anasayfaitemborder"
+                android:layout_margin="10dp"
+                android:onClick="onClick"
+
+                />
+
+        </LinearLayout>
+
+
+
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
+
+
+</LinearLayout>

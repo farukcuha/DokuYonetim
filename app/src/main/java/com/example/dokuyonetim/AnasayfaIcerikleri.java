@@ -54,7 +54,7 @@ public class AnasayfaIcerikleri extends AppCompatActivity {
     private static final int PICK_IMAGE = 100;
     private static final int IMAGE_CAPTURE_CODE = 1001;
 
-    private ProgressBar pd;
+    private ProgressBar pd;;
 
     FirebaseStorage mStorageReference = FirebaseStorage.getInstance("gs://dokuapp-fcf7e.appspot.com");
     StorageReference storageReference = mStorageReference.getReference().child("anasayfa.jpeg");

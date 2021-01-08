@@ -91,6 +91,7 @@
                  />
 
             <ImageView
+                android:id="@+id/btn1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/changeicon"
@@ -116,6 +117,7 @@
                 tools:layout_editor_absoluteY="103dp" />
 
             <ImageView
+                android:id="@+id/btn2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/changeicon"

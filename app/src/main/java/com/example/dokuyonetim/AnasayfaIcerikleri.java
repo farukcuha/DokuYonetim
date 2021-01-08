@@ -60,7 +60,7 @@ public class AnasayfaIcerikleri extends AppCompatActivity {
     StorageReference storageReference = mStorageReference.getReference().child("anasayfa.jpeg");
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anasayfa_icerikleri);
         anasayfaYazi = findViewById(R.id.anasayfayazi);

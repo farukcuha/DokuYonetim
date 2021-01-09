@@ -48,7 +48,6 @@ public class AnasayfaIcerikleri extends AppCompatActivity {
     private Button resmidegistir, yaziyidegistir;
     private ImageView anaresim;
     YazıdegistirmeDialog yazıdegistirmeDialog;
-    AlertDialog dialog;
     Uri image_uri;
     private static final int PERMISSION_CODE = 1000;
     private static final int PICK_IMAGE = 100;

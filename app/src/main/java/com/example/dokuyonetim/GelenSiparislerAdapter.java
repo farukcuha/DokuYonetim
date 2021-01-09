@@ -1,9 +1,12 @@
 package com.example.dokuyonetim;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,9 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class GelenSiparislerAdapter extends FirestoreRecyclerAdapter<GelenSiparislerValues, GelenSiparislerAdapter.Holder> {
-
+    Bundle bundle = new Bundle();
+    ProgressDialog pd;
 
 
     public GelenSiparislerAdapter(@NonNull FirestoreRecyclerOptions<GelenSiparislerValues> options) {
@@ -30,7 +38,41 @@ public class GelenSiparislerAdapter extends FirestoreRecyclerAdapter<GelenSipari
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.getContext().startActivity(new Intent(v.getContext(), GelenSiparisAyrinti.class));
+                //getAdresData(model.getSiparisNumarasi(), model);
+                pd = new ProgressDialog(holder.itemView.getContext());
+                pd.show();
+                FirebaseFirestore.getInstance().collection("Siparişler").document(model.getSiparisNumarasi())
+                        .collection("Adres").document("adres")
+                        .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DocumentSnapshot sp = task.getResult();
+                        bundle.putString("Ad Soyad", String.valueOf(sp.get("Ad Soyad")));
+                        bundle.putString("Adres", String.valueOf(sp.get("Adres")));
+                        bundle.putString("Adres Başlığı", String.valueOf(sp.get("Adres Başlığı")));
+                        bundle.putString("Telefon no", String.valueOf(sp.get("Telefon no")));
+                        bundle.putString("İlİlçe", String.valueOf(sp.get("İlİlçe")));
+
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()){
+                            bundle.putString("siparisdurumu", model.getSiparisDurumu());
+                            bundle.putString("fiyat", model.getOdenenTutar());
+                            bundle.putString("siparistarihi", model.getSiparisTarihi());
+                            bundle.putString("siparisno", model.getSiparisNumarasi());
+
+                            Intent intent = new Intent(holder.itemView.getContext(), GelenSiparisAyrinti.class);
+                            intent.putExtras(bundle);
+                            holder.itemView.getContext().startActivity(intent);
+                            pd.dismiss();
+                        }
+                    }
+                });
+
+
+
             }
         });
     }

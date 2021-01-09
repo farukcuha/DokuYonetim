@@ -1,27 +1,21 @@
 package com.example.dokuyonetim;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDialog;
-import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class GelenSiparisAyrinti extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
+public class GelenSiparisAyrinti extends AppCompatActivity{
     private Button bilgileriGuncelle;
     private TextView siparisAdSoyad, siparisNo, siparisTarihi, siparisTutar, siparisDurumu, kargoTakipNo;
     private TextView adresAd, adresAdSoyad, adres, adresIlIlce, adresTelNo;
@@ -32,71 +26,40 @@ public class GelenSiparisAyrinti extends AppCompatActivity implements PopupMenu.
     ProgressBar pd;
     private TextView kargoBilgisi;
     private LinearLayout linearLayout;
+    private SiparisAyrintiAdapter adapter;
 
     String str_kargodurumu;
+    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gelen_siparis_ayrinti);
 
+        bundle = getIntent().getExtras();
+
         idPairs();
-
-        bilgileriGuncelle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               showPopup();
-
-            }
-        });
-
-    }
-    public void showPopup(View view){
-        PopupMenu menu = new PopupMenu(this, view);
-        menu.setOnMenuItemClickListener(this);
-        menu.inflate(R.menu.siparisdurummenu);
-        menu.show();
-
+        setText();
+        setUpRecyclerView();
     }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.durum1:
-                Log.d("a", "hazırlanıyor");
-                return true;
-            case R.id.durum3:
-                Log.d("a", "durum3");
-                return true;
-            case R.id.durum4:
-                Log.d("a", "durum4");
-                return true;
-            case R.id.kargo1:
-                Log.d("a", "kargo1");
-                return true;
-            case R.id.kargo2:
-                Log.d("a", "kargo2");
-                return true;
-            case R.id.kargo3:
-                Log.d("a", "kargo3");
-                return true;
-            case R.id.kargo4:
-                Log.d("a" ,"kargo4");
-                return true;
-            case R.id.kargo5:
-                Log.d("a" ,"kargo5");
-                return true;
-            case R.id.kargo6:
-                Log.d("a", "kargo6");
-                return true;
-        }
-        str_kargodurumu = String.valueOf(item.getTitle());
-        Log.d("a", str_kargodurumu);
-        return true;
+    private void setUpRecyclerView() {
+        Query query = FirebaseFirestore.getInstance().collection("Siparişler").document(bundle.getString("siparisno"))
+                .collection("Ürünler").orderBy("sepetUrunAdet", Query.Direction.ASCENDING);
+
+        FirestoreRecyclerOptions<SiparisAyrintiItems> options = new FirestoreRecyclerOptions.Builder<SiparisAyrintiItems>()
+                .setQuery(query, SiparisAyrintiItems.class)
+                .build();
+        adapter = new SiparisAyrintiAdapter(options);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
     }
+
 
     private void idPairs(){
-        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recyclerView3);
         //bilgileriGuncelle = findViewById(R.id.button);
 
         siparisAdSoyad = findViewById(R.id.siparisadsoyad);
@@ -114,37 +77,37 @@ public class GelenSiparisAyrinti extends AppCompatActivity implements PopupMenu.
 
     }
 
-    private void showPopup(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.siparisyonetdialog, null);
-        siparisAlertButton = view.findViewById(R.id.siparisdurumu);
-        kargoTakip = view.findViewById(R.id.kargotakip);
-        not = view.findViewById(R.id.not);
-        pd = view.findViewById(R.id.progres);
-        kargoBilgisi = view.findViewById(R.id.kargobilgisi);
-        linearLayout = view.findViewById(R.id.kargosatırı);
+    private void setText(){
 
 
-        builder.setView(R.layout.siparisyonetdialog).setTitle("Bilgileri Güncelle")
-                .setPositiveButton("Kaydet", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        pd.setVisibility(View.VISIBLE);
+        siparisAdSoyad.setText(bundle.getString("Ad Soyad"));
+        siparisNo.setText(bundle.getString("siparisno"));
+        siparisTarihi.setText(bundle.getString("siparistarihi"));
+        siparisTutar.setText(bundle.getString("fiyat"));
+        siparisDurumu.setText(bundle.getString("siparisdurumu"));
 
-                    }
-                }).
-                setNegativeButton("İptal", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                }).show();
+        adresAd.setText(bundle.getString("Adres Başlığı"));
+        adresAdSoyad.setText(bundle.getString("Ad Soyad"));
+        adres.setText(bundle.getString("Adres"));
+        adresIlIlce.setText(bundle.getString("İlİlçe"));
+        adresTelNo.setText(bundle.getString("Telefon no"));
 
-        kargoBilgisi.setText(str_kargodurumu);
 
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
+}
 
 
 

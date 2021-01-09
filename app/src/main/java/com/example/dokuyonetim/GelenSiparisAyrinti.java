@@ -1,35 +1,48 @@
 package com.example.dokuyonetim;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.animation.ObjectAnimator;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
 
 public class GelenSiparisAyrinti extends AppCompatActivity{
-    private Button bilgileriGuncelle;
     private TextView siparisAdSoyad, siparisNo, siparisTarihi, siparisTutar, siparisDurumu, kargoTakipNo;
     private TextView adresAd, adresAdSoyad, adres, adresIlIlce, adresTelNo;
     private RecyclerView recyclerView;
-
-    private Button siparisAlertButton;
-    private EditText kargoTakip, not;
-    ProgressBar pd;
-    private TextView kargoBilgisi;
-    private LinearLayout linearLayout;
     private SiparisAyrintiAdapter adapter;
-
-    String str_kargodurumu;
-    Bundle bundle;
+    private Bundle bundle;
+    private ProgressDialog pd;
+    private ImageView btn_kargo;
+    private ImageView btn_kargono;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +50,82 @@ public class GelenSiparisAyrinti extends AppCompatActivity{
         setContentView(R.layout.activity_gelen_siparis_ayrinti);
 
         bundle = getIntent().getExtras();
+        CharSequence[] options = {"Hazırlanıyor", "Kargoya Verildi", "Tamamlandı", "İptal Edildi"};
 
         idPairs();
         setText();
         setUpRecyclerView();
+
+        btn_kargo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pd = new ProgressDialog(GelenSiparisAyrinti.this);
+                pd.setMessage("Yükleniyor...");
+                AlertDialog.Builder builder = new AlertDialog.Builder(GelenSiparisAyrinti.this);
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(options[which].equals("Hazırlanıyor")){
+                            siparisDurumDbHelper("Hazırlanıyor");
+                            dialog.dismiss();
+                        }
+                        else if(options[which].equals("Kargoya Verildi")){
+                            siparisDurumDbHelper("Kargoya Verildi");
+                            dialog.dismiss();
+
+                        }
+                        else if(options[which].equals("Tamamlandı")){
+                            siparisDurumDbHelper("Tamamlandı");
+                            dialog.dismiss();
+
+
+                        }
+                        else if(options[which].equals("İptal Edildi")){
+                            siparisDurumDbHelper("İptal Edildi");
+                            dialog.dismiss();
+
+
+                        }
+
+
+                    }
+                }).show();
+
+            }
+        });
+
+        btn_kargono.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    private void siparisDurumDbHelper(String durum){
+        pd.show();
+        HashMap<String, Object> hashMap = new HashMap<>();
+        if(durum == "Tamamlandı"){
+            hashMap.put("tamamlandimi?", true);
+        }
+        else {
+            hashMap.put("siparisDurumu", durum);
+            siparisDurumu.setText(durum);
+            siparisDurumu.setTextColor(Color.RED);
+
+
+            FirebaseFirestore.getInstance().collection("Siparişler").document(bundle.getString("siparisno"))
+                    .set(hashMap, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        pd.dismiss();
+                    }
+
+                }
+            });
+        }
+
     }
 
     private void setUpRecyclerView() {
@@ -75,16 +160,19 @@ public class GelenSiparisAyrinti extends AppCompatActivity{
         adresIlIlce = findViewById(R.id.ililce);
         adresTelNo = findViewById(R.id.telefonno);
 
+        btn_kargo = findViewById(R.id.btn1);
+        btn_kargono = findViewById(R.id.btn2);
+
     }
 
     private void setText(){
 
 
-        siparisAdSoyad.setText(bundle.getString("Ad Soyad"));
-        siparisNo.setText(bundle.getString("siparisno"));
-        siparisTarihi.setText(bundle.getString("siparistarihi"));
-        siparisTutar.setText(bundle.getString("fiyat"));
-        siparisDurumu.setText(bundle.getString("siparisdurumu"));
+        siparisAdSoyad.setText("Ad/Soyad: " + bundle.getString("Ad Soyad"));
+        siparisNo.setText("Sipariş No: "+bundle.getString("siparisno"));
+        siparisTarihi.setText("Tarih: "+bundle.getString("siparistarihi"));
+        siparisTutar.setText("Toplam Tutar: "+bundle.getString("fiyat"));
+        siparisDurumu.setText("Sipariş Durumu: "+bundle.getString("siparisdurumu"));
 
         adresAd.setText(bundle.getString("Adres Başlığı"));
         adresAdSoyad.setText(bundle.getString("Ad Soyad"));
@@ -95,6 +183,8 @@ public class GelenSiparisAyrinti extends AppCompatActivity{
 
 
     }
+
+
 
     @Override
     protected void onStart() {

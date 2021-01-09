@@ -20,8 +20,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class GelenSiparislerAdapter extends FirestoreRecyclerAdapter<GelenSiparislerValues, GelenSiparislerAdapter.Holder> {
-    Bundle bundle = new Bundle();
-    ProgressDialog pd;
+    private Bundle bundle = new Bundle();
+    private ProgressDialog pd;
 
 
     public GelenSiparislerAdapter(@NonNull FirestoreRecyclerOptions<GelenSiparislerValues> options) {
@@ -40,6 +40,7 @@ public class GelenSiparislerAdapter extends FirestoreRecyclerAdapter<GelenSipari
             public void onClick(View v) {
                 //getAdresData(model.getSiparisNumarasi(), model);
                 pd = new ProgressDialog(holder.itemView.getContext());
+                pd.setMessage("Yükleniyor...");
                 pd.show();
                 FirebaseFirestore.getInstance().collection("Siparişler").document(model.getSiparisNumarasi())
                         .collection("Adres").document("adres")
@@ -66,13 +67,12 @@ public class GelenSiparislerAdapter extends FirestoreRecyclerAdapter<GelenSipari
                             Intent intent = new Intent(holder.itemView.getContext(), GelenSiparisAyrinti.class);
                             intent.putExtras(bundle);
                             holder.itemView.getContext().startActivity(intent);
-                            pd.dismiss();
+
                         }
+                        pd.dismiss();
+
                     }
                 });
-
-
-
             }
         });
     }

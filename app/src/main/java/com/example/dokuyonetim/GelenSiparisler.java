@@ -35,7 +35,7 @@ public class GelenSiparisler extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gelen_siparisler);
 
-        Query query = firestore.collection("Siparişler").orderBy("tamamlandimi?", Query.Direction.ASCENDING);
+        Query query = firestore.collection("Siparişler").orderBy("odenenTutar", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<GelenSiparislerValues> options = new FirestoreRecyclerOptions.Builder<GelenSiparislerValues>()
                 .setQuery(query, GelenSiparislerValues.class)

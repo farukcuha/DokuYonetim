@@ -19,14 +19,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DokuYonetim">
-        <activity android:name=".Activitys.GelenSiparisAyrinti"></activity>
-        <activity android:name=".Activitys.BildirimYonetimi" />
-        <activity android:name=".Activitys.AnasayfaIcerikleri" />
-        <activity android:name=".Activitys.Kullanicilar" />
+        <activity android:name=".Activities.GelenSiparisAyrinti"></activity>
+        <activity android:name=".Activities.BildirimYonetimi" />
+        <activity android:name=".Activities.AnasayfaIcerikleri" />
+        <activity android:name=".Activities.Kullanicilar" />
         <activity android:name=".Values.Urunler" />
-        <activity android:name=".Activitys.TamamlananSiparisler" />
-        <activity android:name=".Activitys.GelenSiparisler" />
-        <activity android:name=".Activitys.MainActivity">
+        <activity android:name=".Activities.TamamlananSiparisler" />
+        <activity android:name=".Activities.GelenSiparisler" />
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

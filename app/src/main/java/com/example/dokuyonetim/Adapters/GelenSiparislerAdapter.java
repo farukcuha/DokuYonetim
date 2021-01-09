@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dokuyonetim.Activitys.GelenSiparisAyrinti;
+import com.example.dokuyonetim.Activities.GelenSiparisAyrinti;
 import com.example.dokuyonetim.Values.GelenSiparislerValues;
 import com.example.dokuyonetim.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;

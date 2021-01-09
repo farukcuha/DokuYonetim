@@ -1,4 +1,4 @@
-package com.example.dokuyonetim.Activitys;
+package com.example.dokuyonetim.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

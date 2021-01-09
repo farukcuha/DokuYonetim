@@ -1,4 +1,4 @@
-package com.example.dokuyonetim.Activitys;
+package com.example.dokuyonetim.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;

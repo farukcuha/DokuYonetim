@@ -1,4 +1,4 @@
-package com.example.dokuyonetim.Activitys;
+package com.example.dokuyonetim.Activities;
 
 import android.app.Dialog;
 import android.content.DialogInterface;

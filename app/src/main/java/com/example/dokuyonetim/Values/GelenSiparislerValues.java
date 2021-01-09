@@ -1,4 +1,4 @@
-package com.example.dokuyonetim;
+package com.example.dokuyonetim.Values;
 
 import java.util.List;
 

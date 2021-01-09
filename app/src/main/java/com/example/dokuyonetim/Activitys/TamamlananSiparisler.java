@@ -1,8 +1,10 @@
-package com.example.dokuyonetim;
+package com.example.dokuyonetim.Activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.dokuyonetim.R;
 
 public class TamamlananSiparisler extends AppCompatActivity {
 

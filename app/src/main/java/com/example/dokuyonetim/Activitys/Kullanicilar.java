@@ -1,9 +1,11 @@
-package com.example.dokuyonetim;
+package com.example.dokuyonetim.Activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+
+import com.example.dokuyonetim.R;
 
 public class Kullanicilar extends AppCompatActivity {
     private RecyclerView recyclerView;

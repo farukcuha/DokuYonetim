@@ -1,4 +1,4 @@
-package com.example.dokuyonetim;
+package com.example.dokuyonetim.Activitys;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.example.dokuyonetim.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;

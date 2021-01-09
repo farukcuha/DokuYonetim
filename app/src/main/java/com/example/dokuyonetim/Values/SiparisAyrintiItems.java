@@ -1,4 +1,4 @@
-package com.example.dokuyonetim;
+package com.example.dokuyonetim.Values;
 
 public class SiparisAyrintiItems {
     private String sepetUrunAdi;

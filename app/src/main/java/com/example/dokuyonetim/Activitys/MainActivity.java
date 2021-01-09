@@ -1,11 +1,13 @@
-package com.example.dokuyonetim;
+package com.example.dokuyonetim.Activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+
+import com.example.dokuyonetim.R;
+import com.example.dokuyonetim.Values.Urunler;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 

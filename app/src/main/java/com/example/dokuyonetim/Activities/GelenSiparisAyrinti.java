@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -70,11 +71,11 @@ public class GelenSiparisAyrinti extends AppCompatActivity{
                             siparisDurumDbHelper("Tamamlandı");
                             dialog.dismiss();
 
-
                         }
                         else if(options[which].equals("İptal Edildi")){
                             siparisDurumDbHelper("İptal Edildi");
                             dialog.dismiss();
+
 
 
                         }
@@ -98,7 +99,21 @@ public class GelenSiparisAyrinti extends AppCompatActivity{
         pd.show();
         HashMap<String, Object> hashMap = new HashMap<>();
         if(durum == "Tamamlandı"){
-            hashMap.put("tamamlandimi?", true);
+            hashMap.put("tamamlandimi", true);
+            hashMap.put("siparisDurumu", durum);
+            siparisDurumu.setText(durum);
+            siparisDurumu.setTextColor(Color.RED);
+
+            FirebaseFirestore.getInstance().collection("Siparişler").document(bundle.getString("siparisno"))
+                    .set(hashMap, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        pd.dismiss();
+                    }
+
+                }
+            });
         }
         else {
             hashMap.put("siparisDurumu", durum);

@@ -51,7 +51,7 @@ public class GelenSiparislerAdapter extends FirestoreRecyclerAdapter<GelenSipari
                         bundle.putString("Adres", String.valueOf(sp.get("Adres")));
                         bundle.putString("Adres Başlığı", String.valueOf(sp.get("Adres Başlığı")));
                         bundle.putString("Telefon no", String.valueOf(sp.get("Telefon no")));
-                        bundle.putString("İlİlçe", String.valueOf(sp.get("İlİlçe")));
+                        bundle.putString("İlİlçe", String.valueOf(sp.get("İlİlçe")))
 
                     }
                 }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

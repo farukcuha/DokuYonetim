@@ -8,12 +8,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dokuyonetim.Adapters.SiparisAyrintiAdapter;
 import com.example.dokuyonetim.R;
@@ -37,6 +43,10 @@ public class GelenSiparisAyrinti extends AppCompatActivity{
     private ImageView btn_kargo;
     private ImageView btn_kargono;
 
+    private Spinner spinner;
+    private EditText editKargoNo;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,16 +54,19 @@ public class GelenSiparisAyrinti extends AppCompatActivity{
 
         bundle = getIntent().getExtras();
         CharSequence[] options = {"Hazırlanıyor", "Kargoya Verildi", "Tamamlandı", "İptal Edildi"};
+        String[] kargolar = {"MNG", "Yurtiçi", "Aras", "UPS", "Sürat", "PTT"};
 
         idPairs();
         setText();
         setUpRecyclerView();
 
+        pd = new ProgressDialog(GelenSiparisAyrinti.this);
+        pd.setMessage("Yükleniyor...");
+
         btn_kargo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pd = new ProgressDialog(GelenSiparisAyrinti.this);
-                pd.setMessage("Yükleniyor...");
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(GelenSiparisAyrinti.this);
                 builder.setItems(options, new DialogInterface.OnClickListener() {
                     @Override
@@ -90,6 +103,64 @@ public class GelenSiparisAyrinti extends AppCompatActivity{
         btn_kargono.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(GelenSiparisAyrinti.this);
+                builder.setTitle("Kargo");
+                View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.kargonotemdialog, null);
+                HashMap<String, Object> hashMap = new HashMap<>();
+
+                spinner = view.findViewById(R.id.spinner);
+                editKargoNo = view.findViewById(R.id.kargono);
+
+
+
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(GelenSiparisAyrinti.this,
+                        android.R.layout.simple_spinner_dropdown_item, kargolar);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        String kargo = spinner.getSelectedItem().toString();
+                        hashMap.put("kargoFirma", kargo);
+                        Log.d("a", kargo);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+                builder.setView(view);
+                builder.setPositiveButton("Kaydet", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        pd.show();
+
+                        hashMap.put("kargoTakipNo", editKargoNo.getText().toString());
+
+                        FirebaseFirestore.getInstance().collection("Siparişler").document(bundle.getString("siparisno"))
+                                .set(hashMap, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+
+                                    pd.dismiss();
+
+                                }
+                            }
+                        });
+
+
+                    }
+                }).setNegativeButton("İptal", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
 
             }
         });
@@ -204,6 +275,8 @@ public class GelenSiparisAyrinti extends AppCompatActivity{
         super.onStop();
         adapter.stopListening();
     }
+
+
 }
 
 

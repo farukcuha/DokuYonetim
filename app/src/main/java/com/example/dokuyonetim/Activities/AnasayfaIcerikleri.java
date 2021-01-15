@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,13 +31,20 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.HashMap;
 
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -70,8 +78,6 @@ public class AnasayfaIcerikleri extends AppCompatActivity {
 
         currentItems();
 
-
-
         resmidegistir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,12 +93,7 @@ public class AnasayfaIcerikleri extends AppCompatActivity {
 
             }
         });
-
-
-
     }
-
-
     private void dialog(){
         final CharSequence[] options = {"Kamera", "Galeri", "İptal"};
         AlertDialog.Builder builder = new AlertDialog.Builder(AnasayfaIcerikleri.this);
@@ -162,20 +163,15 @@ public class AnasayfaIcerikleri extends AppCompatActivity {
                     }
                 });
     }
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        //this method is called, when user presses Allow or Deny from Permission Request Popup
         switch (requestCode){
             case PERMISSION_CODE:{
                 if (grantResults.length > 0 && grantResults[0] ==
                         PackageManager.PERMISSION_GRANTED){
-                    //permission from popup was granted
                     openCamera();
                 }
                 else {
-                    //permission from popup was denied
                     Toast.makeText(this, "Permission denied...", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -185,74 +181,60 @@ public class AnasayfaIcerikleri extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            //set the image captured to our ImageView
             anaresim.setImageURI(image_uri);
             uploadImage();
         }
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
-
             anaresim.setImageURI(data.getData());
             uploadImage();
         }
     }
 
-    private void uploadImage(){
+    private void uploadImage() {
         anaresim.setDrawingCacheEnabled(true);
         anaresim.buildDrawingCache();
         Bitmap bitmap = ((BitmapDrawable) anaresim.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
-        UploadTask task = storageReference.putBytes(data);
 
-        task.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        storageReference.putBytes(data).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        pd.setProgress(0);
-                    }
-                }, 500);
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                if(task.isSuccessful()){
+                    storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Log.d("a", String.valueOf(uri));
+                            HashMap<String, Object> map = new HashMap<>();
+                            map.put("resim", String.valueOf(uri));
+                            FirebaseFirestore.getInstance().collection("Anasayfa Itemleri").document("İtemler")
+                                    .set(map, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Log.d("a", "Succesfull");
+                                        pd.setProgress(0);
+
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+                int progres = (int) progress;
+                pd.setProgress(progres);
 
             }
         });
-
-        Task<Uri> uri = task.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                if (!task.isSuccessful()) {
-                    throw task.getException();
-                }
-
-                // Continue with the task to get the download URL
-                return storageReference.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    Uri downloadUri = task.getResult();
-                } else {
-                    // Handle failures
-                    // ...
-                }
-            }
-        });
-
-
-
-
-
 
     }
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="25dp">
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        tools:ignore="MissingConstraints"
+        android:textAlignment="center"
+
+        />
+    <EditText
+        android:layout_marginTop="5dp"
+        android:id="@+id/kargono"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Kargo Takip No"
+        android:inputType="number"
+        />
+
+
+</LinearLayout>

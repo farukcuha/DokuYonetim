@@ -37,9 +37,6 @@ public class YazıdegistirmeDialog extends AppCompatDialogFragment {
         pd = view.findViewById(R.id.pd);
         firestore = FirebaseFirestore.getInstance();
 
-
-
-
         builder.setView(view).setTitle("Ana Sayfa Yazısı")
                 .setNegativeButton("İptal", new DialogInterface.OnClickListener() {
                     @Override

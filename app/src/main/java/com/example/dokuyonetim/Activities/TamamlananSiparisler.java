@@ -32,6 +32,7 @@ public class TamamlananSiparisler extends AppCompatActivity {
                 .setQuery(query, GelenSiparislerValues.class)
                 .build();
 
+
         adapter = new TamamlananSiparislerAdapter(options);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);

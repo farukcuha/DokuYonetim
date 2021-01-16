@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="10dp"
     android:background="@drawable/kullaniciitemborder"
-    android:layout_margin="10dp">
+    android:layout_margin="3dp">
 
     <TextView
         android:id="@+id/ad"
@@ -18,7 +18,7 @@
         android:layout_marginHorizontal="10dp"/>
 
     <TextView
-        android:id="@+id/soyad"
+        android:id="@+id/mail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ahmetfarukcuha@hotmail.com"

@@ -1,6 +1,7 @@
 package com.example.dokuyonetim.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,13 +29,16 @@ import com.example.dokuyonetim.Values.SiparisAyrintiItems;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 
-public class GelenSiparisAyrinti extends AppCompatActivity{
+public class SiparisAyrinti extends AppCompatActivity{
     private TextView siparisAdSoyad, siparisNo, siparisTarihi, siparisTutar, siparisDurumu, kargoTakipNo;
     private TextView adresAd, adresAdSoyad, adres, adresIlIlce, adresTelNo;
     private RecyclerView recyclerView;
@@ -42,15 +47,18 @@ public class GelenSiparisAyrinti extends AppCompatActivity{
     private ProgressDialog pd;
     private ImageView btn_kargo;
     private ImageView btn_kargono;
+    private LinearLayout layout;
 
     private Spinner spinner;
     private EditText editKargoNo;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gelen_siparis_ayrinti);
+
 
         bundle = getIntent().getExtras();
         CharSequence[] options = {"Hazırlanıyor", "Kargoya Verildi", "Tamamlandı", "İptal Edildi"};
@@ -60,14 +68,27 @@ public class GelenSiparisAyrinti extends AppCompatActivity{
         setText();
         setUpRecyclerView();
 
-        pd = new ProgressDialog(GelenSiparisAyrinti.this);
+        pd = new ProgressDialog(SiparisAyrinti.this);
         pd.setMessage("Yükleniyor...");
+
+        FirebaseFirestore.getInstance().collection("Siparişler").document(bundle.getString("siparisno"))
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(value.get("siparisDurumu").equals("Kargoya Verildi")){
+                            layout.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            layout.setVisibility(View.GONE);
+                        }
+                    }
+                });
 
         btn_kargo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(GelenSiparisAyrinti.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(SiparisAyrinti.this);
                 builder.setItems(options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -104,7 +125,7 @@ public class GelenSiparisAyrinti extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(GelenSiparisAyrinti.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(SiparisAyrinti.this);
                 builder.setTitle("Kargo");
                 View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.kargonotemdialog, null);
                 HashMap<String, Object> hashMap = new HashMap<>();
@@ -112,10 +133,7 @@ public class GelenSiparisAyrinti extends AppCompatActivity{
                 spinner = view.findViewById(R.id.spinner);
                 editKargoNo = view.findViewById(R.id.kargono);
 
-
-
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(GelenSiparisAyrinti.this,
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(SiparisAyrinti.this,
                         android.R.layout.simple_spinner_dropdown_item, kargolar);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
@@ -152,8 +170,6 @@ public class GelenSiparisAyrinti extends AppCompatActivity{
                                 }
                             }
                         });
-
-
                     }
                 }).setNegativeButton("İptal", new DialogInterface.OnClickListener() {
                     @Override
@@ -190,8 +206,6 @@ public class GelenSiparisAyrinti extends AppCompatActivity{
             hashMap.put("siparisDurumu", durum);
             siparisDurumu.setText(durum);
             siparisDurumu.setTextColor(Color.RED);
-
-
             FirebaseFirestore.getInstance().collection("Siparişler").document(bundle.getString("siparisno"))
                     .set(hashMap, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -241,11 +255,11 @@ public class GelenSiparisAyrinti extends AppCompatActivity{
         btn_kargo = findViewById(R.id.btn1);
         btn_kargono = findViewById(R.id.btn2);
 
+        layout = findViewById(R.id.kargosatırı);
+
     }
 
     private void setText(){
-
-
         siparisAdSoyad.setText("Ad/Soyad: " + bundle.getString("Ad Soyad"));
         siparisNo.setText("Sipariş No: "+bundle.getString("siparisno"));
         siparisTarihi.setText("Tarih: "+bundle.getString("siparistarihi"));
@@ -261,8 +275,6 @@ public class GelenSiparisAyrinti extends AppCompatActivity{
 
 
     }
-
-
 
     @Override
     protected void onStart() {

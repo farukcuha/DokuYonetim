@@ -1,5 +1,6 @@
 package com.example.dokuyonetim.Values;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class GelenSiparislerValues {
@@ -12,7 +13,6 @@ public class GelenSiparislerValues {
     public GelenSiparislerValues(){
 
     }
-
 
     public GelenSiparislerValues(String kargoTakipNo, String odenenTutar, String siparisDurumu, String siparisNumarasi, String siparisTarihi) {
         this.kargoTakipNo = kargoTakipNo;

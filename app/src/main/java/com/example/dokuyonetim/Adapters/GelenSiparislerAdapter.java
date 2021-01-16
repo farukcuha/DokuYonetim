@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dokuyonetim.Activities.GelenSiparisAyrinti;
+import com.example.dokuyonetim.Activities.SiparisAyrinti;
 import com.example.dokuyonetim.Values.GelenSiparislerValues;
 import com.example.dokuyonetim.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -66,7 +66,7 @@ public class GelenSiparislerAdapter extends FirestoreRecyclerAdapter<GelenSipari
                             bundle.putString("siparistarihi", model.getSiparisTarihi());
                             bundle.putString("siparisno", model.getSiparisNumarasi());
 
-                            Intent intent = new Intent(holder.itemView.getContext(), GelenSiparisAyrinti.class);
+                            Intent intent = new Intent(holder.itemView.getContext(), SiparisAyrinti.class);
                             intent.putExtras(bundle);
                             holder.itemView.getContext().startActivity(intent);
 

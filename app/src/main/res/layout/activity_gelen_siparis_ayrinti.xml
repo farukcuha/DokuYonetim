@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.GelenSiparisAyrinti">
+    tools:context=".Activities.SiparisAyrinti">
 
 
     <TextView
@@ -102,6 +102,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/kargosatırı"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">

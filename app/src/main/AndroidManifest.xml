@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DokuYonetim">
-        <activity android:name=".Activities.GelenSiparisAyrinti"></activity>
+        <activity android:name=".Activities.TamamlananSiparisAyrinti"></activity>
+        <activity android:name=".Activities.GelenSiparisAyrinti" />
         <activity android:name=".Activities.BildirimYonetimi" />
         <activity android:name=".Activities.AnasayfaIcerikleri" />
         <activity android:name=".Activities.Kullanicilar" />

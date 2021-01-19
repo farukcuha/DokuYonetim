@@ -33,7 +33,7 @@ public class SiparisAyrintiAdapter extends FirestoreRecyclerAdapter<SiparisAyrin
         holder.sepetUrunAdi.setText(model.getSepetUrunAdi());
         holder.sepetUrunAdet.setText(model.getSepetUrunAdet() + " Adet");
 
-        Glide.with(holder.itemView.getContext()).load(model.getSepetUrunResim()).listener(new RequestListener<Drawable>() {
+        Glide.with(holder.itemView.getContext()).load(model.getSepetUrunResim()).override(100,100).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 holder.pd.setVisibility(View.GONE);
@@ -45,7 +45,7 @@ public class SiparisAyrintiAdapter extends FirestoreRecyclerAdapter<SiparisAyrin
                 holder.pd.setVisibility(View.GONE);
                 return false;
             }
-        }).into(holder.sepetUrunResim);
+        }).centerCrop().into(holder.sepetUrunResim);
 
 
         holder.sepetUrunToplamFiyati.setText(String.valueOf(model.getSepetUrunToplamFiyat()) + " ₺");
@@ -54,7 +54,7 @@ public class SiparisAyrintiAdapter extends FirestoreRecyclerAdapter<SiparisAyrin
     @NonNull
     @Override
     public SiparisAyrintiAdapter.Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.siparisayrintiitems, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.siparisayrintiurunler, parent, false);
         return new Holder(view);
     }
 

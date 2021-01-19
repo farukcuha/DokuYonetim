@@ -1,14 +1,12 @@
 package com.example.dokuyonetim.Activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
 
+import com.example.dokuyonetim.Adapters.KullanicilarAdapter;
 import com.example.dokuyonetim.R;
 import com.example.dokuyonetim.Values.KullanicilarValues;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;

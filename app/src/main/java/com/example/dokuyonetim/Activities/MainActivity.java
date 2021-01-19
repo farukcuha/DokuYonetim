@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.dokuyonetim.R;
-import com.example.dokuyonetim.Values.Urunler;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 

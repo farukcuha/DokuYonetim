@@ -1,11 +1,13 @@
 package com.example.dokuyonetim.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,8 +18,11 @@ import com.example.dokuyonetim.Adapters.GelenSiparislerAdapter;
 import com.example.dokuyonetim.R;
 import com.example.dokuyonetim.Values.GelenSiparislerValues;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.ServerTimestamp;
 
 public class GelenSiparisler extends AppCompatActivity{
@@ -37,7 +42,9 @@ public class GelenSiparisler extends AppCompatActivity{
 
         queryWhere = firestore.collection("Siparişler").whereEqualTo("tamamlandimi", false)
                 .orderBy("odenenTutar", Query.Direction.ASCENDING);
+
         setUpRecyclerView(queryWhere);
+
 
         /*String[] olcutler = {"Fiyat +", "Fiyat -", "Tarih +", "Tarih -"};
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, olcutler);
@@ -79,6 +86,8 @@ public class GelenSiparisler extends AppCompatActivity{
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
+
+
     }
 
 

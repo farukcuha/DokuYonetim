@@ -19,11 +19,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DokuYonetim">
-        <activity android:name=".Activities.GelenSiparisAyrinti"></activity>
         <activity android:name=".Activities.BildirimYonetimi" />
+        <activity android:name=".Activities.SiparisAyrinti" />
+
         <activity android:name=".Activities.AnasayfaIcerikleri" />
         <activity android:name=".Activities.Kullanicilar" />
-        <activity android:name=".Values.Urunler" />
+        <activity android:name=".Activities.Urunler" />
         <activity android:name=".Activities.TamamlananSiparisler" />
         <activity android:name=".Activities.GelenSiparisler" />
         <activity android:name=".Activities.MainActivity">

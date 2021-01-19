@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_marginTop="5dp">
+
+
+    <ProgressBar
+        android:id="@+id/progress_sepet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/xml_spt_resim"
+        app:layout_constraintEnd_toEndOf="@+id/xml_spt_resim"
+        app:layout_constraintStart_toStartOf="@+id/xml_spt_resim"
+        app:layout_constraintTop_toTopOf="@+id/xml_spt_resim"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/xml_spt_resim"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
+        android:background="@drawable/orangeborder"
+        android:padding="2dp"
         android:src="@drawable/urunler"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/xml_spt_btneksi"
@@ -19,33 +34,34 @@
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints,UnknownId" />
 
+
     <TextView
         android:id="@+id/xml_spt_ad"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
         android:text="Cevizli Sucuk"
         android:textColor="#FF5722"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.021"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/xml_spt_resim"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.219"
         tools:ignore="MissingConstraints" />
 
-
     <TextView
-        android:id="@+id/xml_sepet_adet"
+        android:id="@+id/xml_sepet_satısturu"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:gravity="center"
-        android:text="1 Adet"
+        android:text="KG"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.316"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.018"
+        app:layout_constraintStart_toEndOf="@+id/xml_spt_resim"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.771"
         tools:ignore="MissingConstraints" />

@@ -77,6 +77,7 @@ public class SiparisAyrinti extends AppCompatActivity{
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                         if(value.get("siparisDurumu").equals("Kargoya Verildi")){
                             layout.setVisibility(View.VISIBLE);
+                            kargoTakipNo.setText("Kargo Takip No: "+value.get("kargoTakipNo") + " - " + value.get("kargoFirma"));
                         }
                         else{
                             layout.setVisibility(View.GONE);
@@ -204,6 +205,7 @@ public class SiparisAyrinti extends AppCompatActivity{
         }
         else {
             hashMap.put("siparisDurumu", durum);
+            hashMap.put("tamamlandimi", false);
             siparisDurumu.setText(durum);
             siparisDurumu.setTextColor(Color.RED);
             FirebaseFirestore.getInstance().collection("Siparişler").document(bundle.getString("siparisno"))
@@ -256,6 +258,7 @@ public class SiparisAyrinti extends AppCompatActivity{
         btn_kargono = findViewById(R.id.btn2);
 
         layout = findViewById(R.id.kargosatırı);
+        kargoTakipNo = findViewById(R.id.kargotakipno);
 
     }
 

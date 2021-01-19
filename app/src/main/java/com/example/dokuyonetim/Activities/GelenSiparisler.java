@@ -33,7 +33,7 @@ public class GelenSiparisler extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gelen_siparisler);
         text = findViewById(R.id.textvieww);
-        //spinner = findViewById(R.id.gelenspinner);
+        /*spinner = findViewById(R.id.gelenspinner);*/
 
         queryWhere = firestore.collection("Siparişler").whereEqualTo("tamamlandimi", false)
                 .orderBy("odenenTutar", Query.Direction.ASCENDING);

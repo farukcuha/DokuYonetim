@@ -27,7 +27,7 @@ public class GelenSiparisler extends AppCompatActivity{
     private RecyclerView recyclerView;
     private TextView text;
     private Spinner spinner;
-    private Query queryWhere, queryAscDsc;
+    private Query queryWhere;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

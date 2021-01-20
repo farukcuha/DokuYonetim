@@ -6,7 +6,7 @@ public class UrunlerValues {
     private String ürünFiyati;
     private String ürünResim;
     private String ürünSatisTuru;
-    private String urunTahminiKargo;
+    private String ürünTahminiKargo;
 
     public UrunlerValues() {
     }
@@ -17,7 +17,7 @@ public class UrunlerValues {
         this.ürünFiyati = ürünFiyati;
         this.ürünResim = ürünResim;
         this.ürünSatisTuru = ürünSatisTuru;
-        this.urunTahminiKargo = urunTahminiKargo;
+        this.ürünTahminiKargo = urunTahminiKargo;
     }
 
     public String getÜrünAciklama() {
@@ -41,6 +41,6 @@ public class UrunlerValues {
     }
 
     public String getUrunTahminiKargo() {
-        return urunTahminiKargo;
+        return ürünTahminiKargo;
     }
 }

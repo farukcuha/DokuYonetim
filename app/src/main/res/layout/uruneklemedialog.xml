@@ -11,9 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:src="@drawable/ic_baseline_image_24"
-        android:layout_margin="5dp"
-        />
+        android:layout_margin="5dp" />
+
     <Button
+        android:textColor="@color/white"
         android:id="@+id/ekle"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -21,21 +22,40 @@
         android:text="Resim Ekle"
         android:textSize="20sp"/>
 
-    <EditText
-        android:id="@+id/ürünadi"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="5dp"
-        android:hint="Ürün Adı"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/ürünadi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:hint="Ürün Adı"
+            android:layout_weight="0.2"
 
-        />
+            />
+        <EditText
+            android:id="@+id/ürünfiyat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:hint="Fiyat"
+            android:inputType="numberDecimal"
+            android:layout_weight="0.8"
+
+            />
+
+
+    </LinearLayout>
     <EditText
-        android:id="@+id/ürünfiyat"
+        android:id="@+id/urunAciklama"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="5dp"
-        android:hint="Ürün Fiyatı"
-        android:inputType="numberDecimal"
+        android:hint="Ürün Açıklaması"
+        android:maxLines="2"
+        android:lines="2"
 
         />
     <LinearLayout

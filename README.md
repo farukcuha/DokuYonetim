@@ -1,2 +1,2 @@
 # DokuYonetim
-> dwwefrgethry
+> 

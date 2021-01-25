@@ -30,30 +30,26 @@ public class GelenSiparisler extends AppCompatActivity{
     private GelenSiparislerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView recyclerView;
-    private TextView text;
+    private TextView bosyazi;
     private Spinner spinner;
     private Query queryWhere;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gelen_siparisler);
-        text = findViewById(R.id.textvieww);
-        /*spinner = findViewById(R.id.gelenspinner);*/
+        bosyazi = findViewById(R.id.bosyazi2);
 
         queryWhere = firestore.collection("Siparişler").whereEqualTo("tamamlandimi", false)
                 .orderBy("kargoTakipNo", Query.Direction.ASCENDING);
-
         setUpRecyclerView(queryWhere);
-
-
-
     }
 
     private void setUpRecyclerView(Query query){
         FirestoreRecyclerOptions<GelenSiparislerValues> options = new FirestoreRecyclerOptions.Builder<GelenSiparislerValues>()
                 .setQuery(query, GelenSiparislerValues.class)
                 .build();
-        mAdapter = new GelenSiparislerAdapter(options);
+        mAdapter = new GelenSiparislerAdapter(options, bosyazi);
 
         recyclerView = findViewById(R.id.aaaaaaaa);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());

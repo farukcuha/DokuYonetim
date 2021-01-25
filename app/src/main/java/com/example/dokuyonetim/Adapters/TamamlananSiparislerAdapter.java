@@ -24,8 +24,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class TamamlananSiparislerAdapter extends FirestoreRecyclerAdapter<GelenSiparislerValues, TamamlananSiparislerAdapter.Holder> {
     private Bundle bundle = new Bundle();
     private ProgressDialog pd;
-    public TamamlananSiparislerAdapter(@NonNull FirestoreRecyclerOptions<GelenSiparislerValues> options) {
+    private TextView bosyazi;
+    public TamamlananSiparislerAdapter(@NonNull FirestoreRecyclerOptions<GelenSiparislerValues> options, TextView bosyazi) {
         super(options);
+        this.bosyazi = bosyazi;
+
     }
 
     @Override
@@ -80,6 +83,13 @@ public class TamamlananSiparislerAdapter extends FirestoreRecyclerAdapter<GelenS
     @Override
     public TamamlananSiparislerAdapter.Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gelensiparisitem, parent, false);
+        if(getSnapshots().isEmpty()){
+            bosyazi.setVisibility(View.VISIBLE);
+        }
+        else {
+            bosyazi.setVisibility(View.GONE);
+
+        }
         return new Holder(view);
     }
 

@@ -246,7 +246,7 @@ public class Urunler extends AppCompatActivity{
         if(requestCode == CAMERA_REQUEST_CODE){
             Glide.with(Urunler.this).load(imageUri).centerCrop().into(resim);
         }
-        else if(requestCode == GALLERY_REQUEST_CODE){
+        else if(requestCode == GALLERY_REQUEST_CODE && data.getData() != null){
             Glide.with(Urunler.this).load(data.getData()).centerCrop().into(resim);
             imageUri = data.getData();
         }

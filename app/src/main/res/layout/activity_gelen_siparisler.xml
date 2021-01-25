@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.GelenSiparisler"
-    android:orientation="vertical">
-
-
-    <!--<Spinner
-        android:textAlignment="center"
-        android:id="@+id/gelenspinner"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        tools:ignore="MissingConstraints"/>-->
+    android:orientation="vertical"
+    android:gravity="center">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/aaaaaaaa"
@@ -23,19 +16,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/_dynamic" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:visibility="gone"
-        android:id="@+id/textvieww"
-        android:layout_width="wrap_content"
+        android:id="@+id/bosyazi2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="qswadsefdgfhj"
-        android:textSize="25sp"
+        android:text="Henüz Yeni Sipariş Yok."
+        android:textSize="50sp"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/aaaaaaaa"
         tools:ignore="MissingConstraints" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

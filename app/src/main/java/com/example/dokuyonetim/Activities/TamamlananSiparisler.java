@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.example.dokuyonetim.Adapters.TamamlananSiparislerAdapter;
 import com.example.dokuyonetim.R;
@@ -16,10 +17,12 @@ import com.google.firebase.firestore.Query;
 public class TamamlananSiparisler extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TamamlananSiparislerAdapter adapter;
+    private TextView bosyazi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tamamlanan_siparisler);
+        bosyazi = findViewById(R.id.bosyazi3);
 
         recyclerView = findViewById(R.id.tamamlanansiparisler);
         setUpRecyclerView();
@@ -33,7 +36,7 @@ public class TamamlananSiparisler extends AppCompatActivity {
                 .build();
 
 
-        adapter = new TamamlananSiparislerAdapter(options);
+        adapter = new TamamlananSiparislerAdapter(options, bosyazi);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));

@@ -24,10 +24,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class GelenSiparislerAdapter extends FirestoreRecyclerAdapter<GelenSiparislerValues, GelenSiparislerAdapter.Holder> {
     private Bundle bundle = new Bundle();
     private ProgressDialog pd;
+    private TextView bosyazi;
 
 
-    public GelenSiparislerAdapter(@NonNull FirestoreRecyclerOptions<GelenSiparislerValues> options) {
+    public GelenSiparislerAdapter(@NonNull FirestoreRecyclerOptions<GelenSiparislerValues> options, TextView bosyazi) {
         super(options);
+        this.bosyazi = bosyazi;
     }
 
     @Override
@@ -72,21 +74,28 @@ public class GelenSiparislerAdapter extends FirestoreRecyclerAdapter<GelenSipari
 
                         }
                         pd.dismiss();
-
                     }
                 });
             }
         });
     }
-
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gelensiparisitem, parent, false);
+        durumDinleme();
         return new Holder(view);
 
     }
 
+    public void durumDinleme(){
+        if(getSnapshots().isEmpty()){
+            bosyazi.setVisibility(View.VISIBLE);
+        }
+        else {
+            bosyazi.setVisibility(View.GONE);
+        }
+    }
     public class Holder extends RecyclerView.ViewHolder {
         TextView siparisno, siparistarihi, fiyat, siparisdurumu;
 

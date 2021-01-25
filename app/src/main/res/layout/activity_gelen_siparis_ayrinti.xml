@@ -80,41 +80,41 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
-                android:layout_weight="0.1"
                 android:id="@+id/siparisdurumu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.1"
                 android:text="Sipariş Durumu: Kargoya Verildi"
                 android:textColor="#605C2E"
-                android:textSize="18sp"
-                 />
+                android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/btn1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/changeicon"
-                android:layout_weight="0.9" />
-
+                android:layout_weight="0.9"
+                android:src="@drawable/changeicon" />
 
 
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/kargosatırı"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
+
             <TextView
-                android:layout_weight="0.1"
                 android:id="@+id/kargotakipno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.1"
                 android:text="Kargo Takip No: 145687463149 - Aras"
                 android:textColor="#605C2E"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="103dp" />
 
@@ -122,10 +122,8 @@
                 android:id="@+id/btn2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/changeicon"
-                android:layout_weight="0.9"/>
-
-
+                android:layout_weight="0.9"
+                android:src="@drawable/changeicon" />
 
 
         </LinearLayout>
@@ -135,25 +133,24 @@
 
 
     <LinearLayout
-        android:layout_marginVertical="5dp"
         android:id="@+id/linearLayout4"
-        android:layout_width="402dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="5dp"
         android:background="@drawable/blueborder"
         android:orientation="vertical"
-        android:layout_marginHorizontal="10dp"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        app:layout_insetEdge="bottom"
         tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/adresadii"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
+
             android:text="Ev"
             android:textColor="#FF5722"
             android:textSize="18sp" />
@@ -162,7 +159,7 @@
             android:id="@+id/adsoyad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
+
             android:text="Ahmet Faruk Çuha"
             android:textColor="#2B2B2B"
             android:textSize="18sp" />
@@ -172,8 +169,7 @@
             android:id="@+id/adres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+
             android:text="Şehit Rafet Karacan Bulvarı No: 50/1
 Mimar Sinan Erkek Öğrenci Yurdu
 "
@@ -185,7 +181,7 @@ Mimar Sinan Erkek Öğrenci Yurdu
             android:id="@+id/ililce"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
+
             android:text="İzmit/Kocaeli"
             android:textColor="#605C2E"
             android:textSize="18sp" />
@@ -195,8 +191,6 @@ Mimar Sinan Erkek Öğrenci Yurdu
             android:id="@+id/telefonno"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingBottom="10dp"
             android:text="05510527048"
             android:textColor="#605C2E"
             android:textSize="18sp" />
@@ -204,12 +198,13 @@ Mimar Sinan Erkek Öğrenci Yurdu
 
     </LinearLayout>
 
+
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginVertical="5dp"
         android:id="@+id/recyclerView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

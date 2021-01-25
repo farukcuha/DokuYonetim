@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -60,8 +61,8 @@ public class AnasayfaIcerikleri extends AppCompatActivity {
     private static final int PERMISSION_CODE = 1000;
     private static final int PICK_IMAGE = 100;
     private static final int IMAGE_CAPTURE_CODE = 1001;
+    private ProgressDialog pd;
 
-    private ProgressBar pd;
 
     FirebaseStorage mStorageReference = FirebaseStorage.getInstance("gs://dokuapp-fcf7e.appspot.com");
     StorageReference storageReference = mStorageReference.getReference().child("anasayfa.jpeg");
@@ -74,7 +75,8 @@ public class AnasayfaIcerikleri extends AppCompatActivity {
         resmidegistir = findViewById(R.id.resmidegistir);
         yaziyidegistir = findViewById(R.id.yazıyıdegistir);
         anaresim = findViewById(R.id.urunresim);
-        pd = findViewById(R.id.horizontalprogress);
+        pd = new ProgressDialog(AnasayfaIcerikleri.this);
+        pd.setMessage("Yükleniyor...");
 
         currentItems();
 
@@ -183,25 +185,17 @@ public class AnasayfaIcerikleri extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            anaresim.setImageURI(image_uri);
-            uploadImage();
+            uploadImage(image_uri);
         }
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
-            anaresim.setImageURI(data.getData());
-            uploadImage();
+            uploadImage(data.getData());
         }
     }
 
-    private void uploadImage() {
-        anaresim.setDrawingCacheEnabled(true);
-        anaresim.buildDrawingCache();
-        Bitmap bitmap = ((BitmapDrawable) anaresim.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
+    private void uploadImage(Uri data) {
+        pd.show();
 
-
-        storageReference.putBytes(data).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+        storageReference.putFile(data).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                 if(task.isSuccessful()){
@@ -217,22 +211,13 @@ public class AnasayfaIcerikleri extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
                                         Log.d("a", "Succesfull");
-                                        pd.setProgress(0);
-
+                                        pd.dismiss();
                                     }
                                 }
                             });
                         }
                     });
                 }
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
-                int progres = (int) progress;
-                pd.setProgress(progres);
-
             }
         });
 

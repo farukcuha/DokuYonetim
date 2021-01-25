@@ -3,6 +3,7 @@ package com.example.dokuyonetim.Activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +21,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,6 +29,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.dokuyonetim.Adapters.UrunlerAdapter;
@@ -57,6 +61,8 @@ public class Urunler extends AppCompatActivity{
     private Uri imageUri;
     private ProgressDialog progressDialog;
     private String newImageUrl;
+    private HashMap<String, Object> hashMap = new HashMap<>();
+    private TextView bosyazi;
 
 
 
@@ -68,6 +74,8 @@ public class Urunler extends AppCompatActivity{
         recyclerView = findViewById(R.id.recyclerView);
         urunEkle = findViewById(R.id.urunekle);
         urunSil = findViewById(R.id.urunsil);
+        bosyazi = findViewById(R.id.bosyazi);
+
 
         progressDialog = new ProgressDialog(Urunler.this);
         progressDialog.setMessage("Yükleniyor...");
@@ -81,7 +89,7 @@ public class Urunler extends AppCompatActivity{
                 .setQuery(query, UrunlerValues.class)
                 .build();
 
-        adapter = new UrunlerAdapter(options);
+        adapter = new UrunlerAdapter(options, bosyazi);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -93,14 +101,23 @@ public class Urunler extends AppCompatActivity{
             }
         });
 
+
+
         urunSil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(adapter.getDeleteProductNames().isEmpty()){
+                    Toast.makeText(Urunler.this, "Ürün Seçiniz", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    urunBilgiSil();
+                }
             }
         });
+    }
 
-
+    private void urunBilgiSil() {
+        adapter.deleteProduct(adapter.getDeleteProductNames(), Urunler.this);
 
     }
 
@@ -108,8 +125,6 @@ public class Urunler extends AppCompatActivity{
         View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.uruneklemedialog, null);
         resim = view.findViewById(R.id.resim);
         Button ekle = view.findViewById(R.id.ekle);
-
-
 
         EditText urunAdi = view.findViewById(R.id.ürünadi);
         EditText urunFiyati = view.findViewById(R.id.ürünfiyat);
@@ -170,7 +185,6 @@ public class Urunler extends AppCompatActivity{
             }
         });
 
-        HashMap<String, Object> hashMap = new HashMap<>();
 
         kargoSuresi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -195,20 +209,9 @@ public class Urunler extends AppCompatActivity{
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 progressDialog.show();
-                hashMap.put("ürünAciklama", urunAciklama.getText().toString());
-                hashMap.put("ürünAdi", urunAdi.getText().toString());
-                hashMap.put("ürünFiyati", urunFiyati.getText().toString());
-                hashMap.put("ürünResim", newImageUrl);
-                FirebaseFirestore.getInstance().collection("Ürünler").document(urunAdi.getText().toString())
-                        .set(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            progressDialog.dismiss();
+                uploadInfos(urunAdi.getText().toString(), urunAciklama.getText().toString(), urunFiyati.getText().toString());
 
-                        }
-                    }
-                });
+
             }
         }).setNegativeButton("İptal", new DialogInterface.OnClickListener() {
             @Override
@@ -241,42 +244,49 @@ public class Urunler extends AppCompatActivity{
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == CAMERA_REQUEST_CODE){
-            progressDialog.show();
-            uploadImage(imageUri);
+            Glide.with(Urunler.this).load(imageUri).centerCrop().into(resim);
         }
         else if(requestCode == GALLERY_REQUEST_CODE){
-            progressDialog.show();
-            uploadImage(data.getData());
+            Glide.with(Urunler.this).load(data.getData()).centerCrop().into(resim);
+            imageUri = data.getData();
         }
-
         else {
             progressDialog.dismiss();
         }
     }
-    private void uploadImage(Uri uri){
-        StorageReference reference = FirebaseStorage.getInstance("gs://dokuapp-fcf7e.appspot.com").getReference().child("urunler/"+uri);
-        reference.putFile(uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+    private void uploadInfos(String urunAdi, String urunAciklama, String urunFiyati){
+        StorageReference reference = FirebaseStorage.getInstance("gs://dokuapp-fcf7e.appspot.com").getReference().child("urunler/"+urunAdi);
+        reference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                 if(task.isSuccessful()){
-                    Glide.with(getApplicationContext()).load(uri).centerCrop().into(resim);
-                    reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    Glide.with(getApplicationContext()).load(imageUri).centerCrop().into(resim);
+                    reference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                         @Override
-                        public void onSuccess(Uri uri) {
-                            newImageUrl = String.valueOf(uri);
-                            Log.d("a", newImageUrl);
-                            progressDialog.dismiss();
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if(task.isSuccessful()){
+                                hashMap.put("ürünAciklama", urunAciklama);
+                                hashMap.put("ürünAdi", urunAdi);
+                                hashMap.put("ürünFiyati", urunFiyati);
+                                hashMap.put("ürünResim", task.getResult().toString());
+                                FirebaseFirestore.getInstance().collection("Ürünler").document(urunAdi)
+                                        .set(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            progressDialog.dismiss();
+
+                                        }
+                                    }
+                                });
+                            }
                         }
                     });
-
-
-
                 }
             }
         });
+
     }
-
-
 
     @Override
     protected void onStart() {

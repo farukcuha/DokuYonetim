@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp">
-
+    android:layout_marginTop="5dp"
+    >
 
     <ProgressBar
         android:id="@+id/progress_sepet"
@@ -17,6 +17,20 @@
         app:layout_constraintStart_toStartOf="@+id/xml_spt_resim"
         app:layout_constraintTop_toTopOf="@+id/xml_spt_resim"
         tools:ignore="MissingConstraints" />
+
+    <CheckBox
+        android:visibility="visible"
+        android:id="@+id/chechboxx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.15"
+        tools:ignore="MissingConstraints"
+        />
 
     <ImageView
         android:id="@+id/xml_spt_resim"
@@ -81,4 +95,10 @@
         app:layout_constraintVertical_bias="0.78"
         tools:ignore="MissingConstraints" />
 
+
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+

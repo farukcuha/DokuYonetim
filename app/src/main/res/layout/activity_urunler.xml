@@ -19,6 +19,7 @@
         tools:ignore="MissingConstraints">
 
         <Button
+            android:visibility="visible"
             android:id="@+id/urunsil"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
@@ -37,11 +38,7 @@
             android:layout_margin="5dp"
             android:text="Ürün Ekle"
             android:textSize="17sp"/>
-
-
     </LinearLayout>
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
@@ -52,6 +49,18 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         tools:ignore="MissingConstraints"
         android:layout_marginHorizontal="5dp"/>
+
+    <TextView
+        android:id="@+id/bosyazi"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="Gösterilecek Ürün Bulunamadı."
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

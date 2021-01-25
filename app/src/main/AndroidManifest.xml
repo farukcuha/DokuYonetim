@@ -19,7 +19,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DokuYonetim">
-        <activity android:name=".Activities.BildirimYonetimi" />
         <activity android:name=".Activities.SiparisAyrinti" />
 
         <activity android:name=".Activities.AnasayfaIcerikleri" />
@@ -30,10 +29,13 @@
         <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

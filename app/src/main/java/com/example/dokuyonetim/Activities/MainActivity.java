@@ -41,9 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(getApplicationContext(), AnasayfaIcerikleri.class));
                 break;
 
-            case R.id.bildirim:
-                startActivity(new Intent(getApplicationContext(), BildirimYonetimi.class));
-                break;
+
 
         }
     }

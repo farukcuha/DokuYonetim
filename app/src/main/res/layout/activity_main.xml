@@ -92,19 +92,7 @@
                 android:onClick="onClick"
 
                 />
-            <TextView
-                android:id="@+id/bildirim"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:text="Bildirim Gönderimi"
-                android:textSize="30dp"
-                android:textColor="#111111"
-                android:background="@drawable/anasayfaitemborder"
-                android:layout_margin="10dp"
-                android:onClick="onClick"
 
-                />
 
         </LinearLayout>
 

@@ -41,37 +41,11 @@ public class GelenSiparisler extends AppCompatActivity{
         /*spinner = findViewById(R.id.gelenspinner);*/
 
         queryWhere = firestore.collection("Siparişler").whereEqualTo("tamamlandimi", false)
-                .orderBy("odenenTutar", Query.Direction.ASCENDING);
+                .orderBy("kargoTakipNo", Query.Direction.ASCENDING);
 
         setUpRecyclerView(queryWhere);
 
 
-        /*String[] olcutler = {"Fiyat +", "Fiyat -", "Tarih +", "Tarih -"};
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, olcutler);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (parent.getSelectedItem().toString()){
-                    case "Fiyat+":
-                        queryAscDsc = queryWhere.orderBy("odenenTutar", Query.Direction.ASCENDING);
-                        setUpRecyclerView(queryAscDsc);
-                        break;
-                    case "Fiyat -":
-                        queryAscDsc = queryWhere.orderBy("odenenTutar", Query.Direction.DESCENDING);
-                        setUpRecyclerView(queryAscDsc);
-
-                        break;
-
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
 
     }
 

@@ -153,17 +153,24 @@ public class AnasayfaIcerikleri extends AppCompatActivity {
         currentItems();
     }
 
-    private void currentItems(){
+    private void currentItems() {
         firestore.collection("Anasayfa Itemleri").document("İtemler")
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
                         anasayfaYazi.setText(String.valueOf(value.get("metin")));
-                        Glide.with(getApplicationContext()).load(String.valueOf(value.get("resim"))).
-                                placeholder(R.drawable.anasayfaitemborder).centerCrop().into(anaresim);
+
                     }
                 });
+
+        firestore.collection("Anasayfa Itemleri").document("İtemler")
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                Glide.with(AnasayfaIcerikleri.this).load(task.getResult().get("resim")).into(anaresim);
+            }
+        });
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -184,7 +191,7 @@ public class AnasayfaIcerikleri extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK && requestCode == IMAGE_CAPTURE_CODE) {
             uploadImage(image_uri);
         }
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
@@ -194,7 +201,7 @@ public class AnasayfaIcerikleri extends AppCompatActivity {
 
     private void uploadImage(Uri data) {
         pd.show();
-
+        anaresim.setImageURI(data);
         storageReference.putFile(data).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {

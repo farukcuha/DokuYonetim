@@ -35,7 +35,7 @@ public class TamamlananSiparislerAdapter extends FirestoreRecyclerAdapter<GelenS
     protected void onBindViewHolder(@NonNull TamamlananSiparislerAdapter.Holder holder, int position, @NonNull GelenSiparislerValues model) {
         holder.siparisdurumu.setText(model.getSiparisDurumu());
         holder.fiyat.setText(model.getOdenenTutar());
-        holder.siparistarihi.setText(model.getSiparisTarihi().toString());
+        holder.siparistarihi.setText(model.getSiparisTarihi());
         holder.siparisno.setText(model.getSiparisNumarasi());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

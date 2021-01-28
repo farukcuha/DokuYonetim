@@ -20,13 +20,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DokuYonetim">
         <activity android:name=".Activities.SiparisAyrinti" />
-
+        <activity android:name=".Activities.MainActivity"/>
         <activity android:name=".Activities.AnasayfaIcerikleri" />
         <activity android:name=".Activities.Kullanicilar" />
         <activity android:name=".Activities.Urunler" />
         <activity android:name=".Activities.TamamlananSiparisler" />
         <activity android:name=".Activities.GelenSiparisler" />
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name=".Activities.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>

@@ -14,3 +14,9 @@ I developed this android app as management system of <a target="_blank" href="ht
   :----------------:
   <img src="/img/managementmain.png" width="300">|
   
+  
++ You can see all incoming orders and you can change information about shipping status or shipping number or order completion status.
+
+All Incoming Orders              |Orders Details              | Order Status Changing
+:-------------------------------:|:--------------------------:|:------------------------:
+<img src="/img/incomingorderslist.png" width="300"> | <img src="/img/incomingordersdetails.png" width="300"> | <img src="/img/shipinfo.png" width="300">|

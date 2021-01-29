@@ -21,4 +21,4 @@ All Incoming Orders              |Orders Details              | Order Status Cha
 :-------------------------------:|:--------------------------:|:------------------------:
 <img src="/img/incomingorderslist.png" width="300"> | <img src="/img/incomingordersdetails.png" width="300"> | <img src="/img/shipinfo.png" width="300">|
 
-+ You can see all of saved products and if you want you can add new product with prices and explanation. Also you can delete product whatever you want. The products you have added viewing in <a target="_blank" href="https://github.com/farukcuha/OlivmonApp">OlivmonApp</a>.
++ You can see all of saved products and if you want you can add new product with prices and explanation. Also you can delete product whatever you want. The products you have added show in <a target="_blank" href="https://github.com/farukcuha/OlivmonApp">OlivmonApp</a>.

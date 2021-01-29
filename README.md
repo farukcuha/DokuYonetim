@@ -38,11 +38,9 @@ Users|
 Main Screen Contents    |Image Loader                |Text Loader
 :----------------------:|:--------------------------:|:----------------------------:
 <img src="/img/mainscreenitemsmanagement.png" width="300">|<img src="/img/mainscreenchangeimage.png" width="300">|<img src="/img/mainscreenchangetext.png" width="300">|
-
 ---
-
 <div align = "center">
-    <a href="ahmetfarukcuha.cf"><img src="https://i.ibb.co/nwWY8F7/Varl-k-5-4x-removebg.jpg" alt="icon" width="70"></a>
+    <a href="ahmetfarukcuha.cf"><img src="https://i.ibb.co/nwWY8F7/Varl-k-5-4x-removebg.jpg" alt="icon" width="75"></a>
 </div>
 
 

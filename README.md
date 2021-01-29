@@ -26,3 +26,15 @@ All Incoming Orders              |Orders Details              | Order Status Cha
 Products                           | Product Adding                        | Product Deleting
 :---------------------------------:|:-------------------------------------:|:------------------------:
 <img src="/img/productsmanagement.png" width="300"> |<img src="/img/productadddialog.png" width="300"> | <img src="/img/deletingproduct.png" width="300">
+
++ You can see all of saved users in "Kullanıcılar" section with their name/surname and mail address.
+
+Users|
+:-------------------------------:
+<img src="/img/alluserslist.png" width="300">|
+
+
+
+
+
+

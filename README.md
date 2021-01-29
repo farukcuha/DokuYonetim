@@ -33,8 +33,11 @@ Users|
 :-------------------------------:
 <img src="/img/alluserslist.png" width="300">|
 
-
-
++ Finally you can change image and text in <a target="_blank" href="https://github.com/farukcuha/OlivmonApp">OlivmonApp</a>. As you see below there are image loader and text loader dialog. You can upload image from your device gallery or your camera. You can change them whatever you want.
+ 
+Main Screen Contents    |Image Loader                |Text Loader
+:----------------------:|:--------------------------:|:----------------------------:
+<img src="/img/mainscreenitemsmanagement.png" width="300">|<img src="/img/mainscreenchangeimage.png" width="300">|<img src="/img/mainscreenchangetext.png" width="300">|
 
 
 

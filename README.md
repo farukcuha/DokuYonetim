@@ -9,4 +9,8 @@ I developed this android app as management system of <a target="_blank" href="ht
   
   ---
   
+  + There are 6 sections in this application where you can do so many things.
+  Main Screen|
+  :----------------:|:--------------:
+  <img src="/img/managementmain.png" width="300">
   
